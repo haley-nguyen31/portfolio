@@ -1,0 +1,22 @@
+---
+interface Props { filters: string[]; target: string }
+const { filters, target } = Astro.props;
+---
+<div role="group" aria-label="Filter projects" class="flex flex-wrap gap-2" data-filter-group data-target={target}>
+  {filters.map((f, i) => (
+    <button type="button" data-filter={f.toLowerCase()} aria-pressed={i === 0 ? 'true' : 'false'}
+      class="min-h-11 cursor-pointer rounded-full border border-[#D4D4DA] bg-surface px-4 py-3 font-mono text-[12.5px] text-body transition-colors hover:border-ink aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:text-bg">{f}</button>
+  ))}
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-filter-group]').forEach((group) => {
+    const target = document.querySelector<HTMLElement>(group.dataset.target!);
+    if (!target) return;
+    const buttons = group.querySelectorAll<HTMLButtonElement>('button[data-filter]');
+    buttons.forEach((b) => b.addEventListener('click', () => {
+      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      const f = b.dataset.filter;
+      target.querySelectorAll<HTMLElement>('[data-cat]').forEach((c) => { c.hidden = !(f === 'all' || c.dataset.cat === f); });
+    }));
+  });
+</script>

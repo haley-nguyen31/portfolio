@@ -1,0 +1,148 @@
+{
+  "_note": "Source: source/cv.pdf, verbatim and in original order (typos and placeholders such as 'xB/month' and '1x%' are kept; see TODOs).",
+  "name": "Phuong Minh (Haley) Nguyen",
+  "contact": {
+    "email": "phuongminhminh.works@gmail.com",
+    "phone": "(+84) 985 254 843",
+    "linkedin": "https://www.linkedin.com/in/phuongminhminh/",
+    "portfolioLink": "https://pmmdf.my.canva.site/phuongmnguyen-portfolio",
+    "portfolioLinkTodo": "CV links 'Portfolio' to an old Canva site. Omit on the website?",
+    "location": "Hanoi, Vietnam"
+  },
+  "education": [
+    {
+      "degree": "Bachelor of Marketing, Management",
+      "school": "National Economics University",
+      "location": "Hanoi, Vietnam",
+      "dates": "2020 - 2024",
+      "details": ["GPA: 3.54/4.0"]
+    }
+  ],
+  "achievements": [
+    {
+      "title": "Silver Winner (Digital Category) - Industry Practitioner League - Vietnam Young Lions 2025",
+      "date": "April 2025",
+      "description": "The most prestigious competition for young talents in Marketing & Communication, licensed by Cannes Lions",
+      "images": ["p04-11.jpg", "p15-04.jpg"]
+    },
+    {
+      "title": "Top 11 – Vietnam Social Innovation Challenge",
+      "date": "November 2021",
+      "description": "Nationwide Start-Up Competition organized by Vietnam Chamber of Commerce and Industry (VCCI)",
+      "project": "Project: Build mental wellness ecosystem for Vietnamese youth through a mobile app & community engagement",
+      "images": ["p04-07.jpg"]
+    }
+  ],
+  "achievementGalleryExtra": {
+    "note": "Portfolio 'Achievement' page also shows these; not in CV text. Place next to matching entries? Needs your confirmation for context.",
+    "items": [
+      { "image": "p04-10.jpg", "caption": "Top 15, I-Startup 2022", "matches": "Home awards list (2022)" },
+      { "image": "p04-08.jpg", "caption": "Top 30 (list of 'Đề án xuất sắc nhất')", "matches": "?? unknown which competition" },
+      { "image": "p04-09.jpg", "caption": "AYOSE Certificate of Participation", "matches": "ASEAN Youth Conference 2020" }
+    ]
+  },
+  "experience": [
+    {
+      "company": "Zalopay - VNG Corporation",
+      "location": "Ho Chi Minh City, Vietnam",
+      "roles": [
+        {
+          "title": "UGC Program Owner | Financial Services",
+          "dates": "May 2026 – present",
+          "bullets": [
+            "Established Zalopay's UGC ecosystem by designing the creator operating model, incentive mechanisms, and engagement strategy, managing 60+ creators to deliver financial services’ engagement content on social media. (Threads, Tiktok)",
+            "Owned program performance through KPI design, creator analytics, and continuous optimization of content effectiveness."
+          ]
+        },
+        {
+          "title": "Growth Marketing Executive | Money Transfer",
+          "dates": "June 2025 – present",
+          "bullets": [
+            "Managed growth initiatives for Zalopay's Money Transfer product (P2P, QR payments..) across in-app and external channels with a budget of xB/month, achieving a 1x% MoM increase in monthly active users and a growth of 1x%+ across key user segments.",
+            "Planned and executed full-funnel communication campaigns across Meta, TikTok, and Threads, achieving a steady 120%+ KPI on monthly new paying users."
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Hello Digital Vietnam",
+      "location": "Hanoi, Vietnam",
+      "roles": [
+        {
+          "title": "Account Executive & Strategic Planner (full-time)",
+          "dates": "November 2024 – June, 2025",
+          "note": "*Hello Digital Vietnam is a social - digital marketing agency",
+          "bullets": [
+            "Analyzed client briefs and developed tailored digital media strategies, aligning with business objectives. Coordinated and monitored Meta, Google, Titkok Ads campaigns for a portfolio of 20 clients (SMEs) across diverse industries (fashion, FnB, education..), increasing key clients’ ROI by an average of 25%.",
+            "Developed IMC plans for clients in various fields: electronics, retail, financial services (Panasonic, Lotte Mall Hanoi, Lynk&Co..)"
+          ],
+          "footnote": "*Key clients: Lotte, Panasonic, Lynk&Co, 1C Vietnam"
+        }
+      ]
+    },
+    {
+      "company": "FPT Software | Global Marketing, Communication and Partnership (MCP)",
+      "location": "Hanoi, Vietnam",
+      "roles": [
+        {
+          "title": "Global Marketing Intern & Collaborator",
+          "dates": "May 2023 – May 2024",
+          "bullets": [
+            "Conducted market research & supported strategic global marketing initiatives of 3 key domains: Healthcare, Automotive, Digital commerce.",
+            "In charge of planning and coordinating content, digital ads for marketing events of FPT Software in Vietnam and 5 overseas branches: The Americas, The UK, Germany, Singapore, India; contributing to a 3x% increase in 2023 event attendance and a 1x% boost in brand visibility."
+          ]
+        }
+      ]
+    }
+  ],
+  "leadership": [
+    {
+      "org": "ASEAN Youth Conference",
+      "roles": [
+        {
+          "title": "Delegate",
+          "dates": "August 2020",
+          "bullets": [],
+          "description": "Was selected with 100 Youth Delegates from 10 ASEAN countries to discuss & collaborate in building social initiatives",
+          "images": ["p04-09.jpg"]
+        }
+      ]
+    },
+    {
+      "org": "TEDx Community of Vietnam | TeamX Hanoi",
+      "roles": [
+        {
+          "title": "External Relations Executive",
+          "dates": "2022 – 2023",
+          "bullets": [
+            "Developed and executed partnership strategies, successfully raising over 200 million VND in cash and in-kind sponsorships from 10+ brands in diverse sectors (arts, technology, FnB).",
+            "Executed publicity and communication activities across digital platforms and media outlets, resulting in: 85,463+ total campaign reach, ~2,500 average post reach on official fanpages (TeamX Hanoi & TEDxHoangMinhGiamSt); 400+ series of events attendees."
+          ]
+        }
+      ]
+    },
+    {
+      "org": "Pencil Philosophy | Liberal Arts Education Non-Profit Organization",
+      "roles": [
+        {
+          "title": "Program Management Executive",
+          "dates": "2020 – 2021",
+          "bullets": [
+            "Led partnership and communication initiatives with 20+ organizations, enterprises, including a collaboration with the U.S. Embassy in Hanoi.",
+            "Designed and executed the communication campaign for Summer Program 2021: reaching over 170,000 young people and generating 1,000+ student registrations nationwide."
+          ]
+        }
+      ]
+    }
+  ],
+  "skills": {
+    "Skills": "Communication & Strategic Planning; Paid Media; Data Analysis (SQL, Excel, Looker Studio); Project Management; Content Marketing; Partnership & Fundraising",
+    "Languages": "Vietnamese (Native), English (Fluent), Chinese (HSK 2)",
+    "Interests": "Solo travelling & Vlogging, Photography, Chinese"
+  },
+  "portfolioOnlyEducationExtras": {
+    "note": "Portfolio page 4 ('Resume') lists more than the CV. NOT in CV, so not rendered unless you say so.",
+    "skills": ["Microsoft Office (Word, Excel, Powerpoint - upper intermediate)", "Adobe tools (Photoshop, Premiere - basics)", "Performance Marketing (Meta Ads, Google Ads - basics)", "Email marketing"],
+    "learnings": ["Digital Marketing Certified (HubSpot Academy)", "SQL for Data Analysis (Udacity)", "Business Case Mastery (Tomorrow Marketers)"]
+  }
+}

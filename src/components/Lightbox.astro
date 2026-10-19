@@ -1,0 +1,50 @@
+<dialog id="lightbox" aria-label="Image viewer" class="m-auto max-h-[92vh] w-[min(1100px,94vw)] rounded-2xl border border-line bg-surface p-0 text-ink backdrop:bg-[rgba(17,17,20,0.8)]">
+  <div class="relative flex flex-col">
+    <button type="button" data-lb-close aria-label="Close" class="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-ink text-xl text-bg">×</button>
+    <div class="flex min-h-[200px] items-center justify-center bg-cover p-4 pt-14">
+      <img id="lb-img" alt="" class="max-h-[72vh] w-auto max-w-full rounded-lg object-contain" />
+    </div>
+    <div class="flex items-center justify-between gap-4 border-t border-line px-4 py-3">
+      <button type="button" data-lb-prev aria-label="Previous image" class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line text-lg">←</button>
+      <div class="min-w-0 text-center">
+        <p id="lb-caption" class="m-0 text-sm text-body"></p>
+        <p id="lb-count" class="m-0 font-mono text-xs text-muted" aria-live="polite"></p>
+      </div>
+      <button type="button" data-lb-next aria-label="Next image" class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line text-lg">→</button>
+    </div>
+  </div>
+</dialog>
+<script>
+  const dlg = document.getElementById('lightbox') as HTMLDialogElement | null;
+  if (dlg) {
+    const img = dlg.querySelector<HTMLImageElement>('#lb-img')!;
+    const cap = dlg.querySelector<HTMLElement>('#lb-caption')!;
+    const count = dlg.querySelector<HTMLElement>('#lb-count')!;
+    let list: HTMLElement[] = [];
+    let idx = 0;
+    const show = (i: number) => {
+      idx = (i + list.length) % list.length;
+      const t = list[idx];
+      img.src = t.dataset.full!;
+      img.alt = t.dataset.alt ?? '';
+      cap.textContent = t.dataset.caption || t.dataset.alt || '';
+      count.textContent = list.length > 1 ? `${idx + 1} / ${list.length}` : '';
+      dlg.querySelectorAll<HTMLElement>('[data-lb-prev],[data-lb-next]').forEach((b) => (b.hidden = list.length < 2));
+    };
+    document.addEventListener('click', (e) => {
+      const t = (e.target as HTMLElement).closest<HTMLElement>('.lightbox-trigger');
+      if (!t) return;
+      list = Array.from(document.querySelectorAll<HTMLElement>(`.lightbox-trigger[data-group="${t.dataset.group}"]`));
+      show(list.indexOf(t));
+      dlg.showModal();
+    });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg || (e.target as HTMLElement).closest('[data-lb-close]')) dlg.close(); });
+    dlg.querySelector('[data-lb-prev]')!.addEventListener('click', () => show(idx - 1));
+    dlg.querySelector('[data-lb-next]')!.addEventListener('click', () => show(idx + 1));
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(idx - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(idx + 1); }
+    });
+    dlg.addEventListener('close', () => { img.removeAttribute('src'); });
+  }
+</script>

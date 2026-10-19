@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import home from '../data/home.json';
+import about from '../data/about.json';
+import SectionLabel from '../components/SectionLabel.astro';
+import Img from '../components/Img.astro';
+import StatusPill from '../components/StatusPill.astro';
+import GradientBlob from '../components/GradientBlob.astro';
+import Accordion from '../components/Accordion.astro';
+import AccordionScript from '../components/AccordionScript.astro';
+---
+<Base title="About" description="About Haley Nguyen: a free spirit, lifelong learner and growth marketer who wants to bring heart and evidence to education, youth development and tech for good.">
+  <section class="dot-grid relative overflow-hidden border-b border-line">
+    <GradientBlob />
+    <div class="wrap relative grid items-center gap-12 py-10 md:grid-cols-[minmax(0,1fr)_minmax(0,560px)] md:py-14">
+      <div class="flex flex-col gap-6">
+        <SectionLabel class="">ABOUT</SectionLabel>
+        <h1 class="h1 m-0 font-serif text-[clamp(48px,7vw,88px)] font-normal leading-none tracking-[-0.02em]">Hi, I’m <em>Haley</em>.</h1>
+        <p class="m-0 text-lg font-semibold leading-relaxed text-ink">{home.hero.tagline}</p>
+        <StatusPill>{home.hero.status}</StatusPill>
+      </div>
+      <figure class="relative m-0 mx-auto w-full max-w-[560px] overflow-hidden rounded-2xl border border-line bg-surface p-2 shadow-[0_24px_60px_-30px_rgba(17,17,20,0.25)] md:mx-0">
+        <video
+          id="about-video"
+          class="block aspect-video w-full rounded-xl bg-ink object-cover"
+          src="/videos/haley-intro.mp4"
+          poster="/videos/haley-intro-poster.jpg"
+          width="640"
+          height="360"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-label="A short video of Haley"
+        ></video>
+        <figcaption class="px-2 pb-1 pt-2 font-mono text-xs"><a href="https://www.instagram.com/p/DXyS62JR12Q/" target="_blank" rel="noopener noreferrer" class="link-grad text-accent">Watch on Instagram ↗</a></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="wrap pt-10 md:pt-14" aria-labelledby="quote">
+    <div class="mono-label mb-4" id="quote">MY FAVORITE QUOTE</div>
+    <figure class="m-0">
+      <blockquote class="m-0 border-l-2 border-accent pl-6 font-serif text-[clamp(30px,4.5vw,52px)] italic leading-[1.15] text-ink">
+        “That which does not kill you makes you stronger”
+      </blockquote>
+      <figcaption class="mt-4 pl-6 font-mono text-sm text-muted">Friedrich Nietzsche</figcaption>
+    </figure>
+  </section>
+
+  <section class="wrap py-8 md:py-10">
+    <Accordion id="my-story" title="My story" open>
+      <div class="text-[17px] leading-[1.85] text-body lg:columns-2 lg:gap-14">
+        {about.paragraphs.map((p: string) => <p class="m-0 mb-6 last:mb-0">{p}</p>)}
+      </div>
+    </Accordion>
+  </section>
+
+  <section class="wrap pb-14 md:pb-16" aria-labelledby="ps">
+    <h2 id="ps" class="sr-only">P/s and my blog</h2>
+    <div class="grid items-start gap-8 lg:grid-cols-2 lg:gap-14">
+    <p class="m-0 text-[17px] leading-[1.85] text-body lg:text-[19px]">P/s: Besides, I read, run and do photography. If you share any of the hobbies above, let’s connect.</p>
+    <a href="https://www.facebook.com/profile.php?id=61580958312006" target="_blank" rel="noopener noreferrer"
+       class="group block overflow-hidden rounded-2xl border border-line bg-surface text-ink no-underline transition-transform duration-300 hover:-translate-y-1 hover:border-accent">
+      <div class="relative h-40 w-full overflow-hidden border-b border-line bg-cover sm:h-48">
+        <Img name="blog-cover.jpg" alt="Wildflowers against blue mountains, the cover photo of the Brave-Haley blog" widths={[480, 720, 1000]} sizes="(min-width:768px) 720px, 100vw" class="h-full w-full object-cover" />
+        <span class="absolute bottom-3 right-3 rounded-md border border-line bg-surface px-2 py-1 font-mono text-[11px] text-muted">Facebook · Personal blog</span>
+      </div>
+      <div class="flex flex-col gap-2 p-6">
+        <div class="mono-label">MY BLOG</div>
+        <div class="font-serif text-[30px] leading-tight">Brave-Haley</div>
+        <p class="m-0 text-[16px] leading-relaxed text-body">I read, run and backpack. Hope these stories can spark a bit of courage for your bold journey ahead.</p>
+        <span class="link-grad mt-1 self-start font-mono text-xs text-accent">Visit the blog ↗</span>
+      </div>
+    </a>
+    </div>
+  </section>
+  <AccordionScript />
+  <script>
+    // Autoplay is muted (browsers block autoplay with sound) and loops.
+    // Reduced-motion users get a paused video with native controls.
+    const v = document.getElementById('about-video') as HTMLVideoElement | null;
+    if (v && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      v.pause();
+      v.controls = true;
+    }
+  </script>
+</Base>

@@ -1,0 +1,20 @@
+---
+interface Props {
+  href: string;
+  variant?: 'dark' | 'ghost';
+  class?: string;
+  external?: boolean;
+  download?: boolean;
+}
+const { href, variant = 'dark', class: cls, external = false, download = false } = Astro.props;
+const styles = {
+  dark: 'bg-ink text-bg hover:bg-accent',
+  ghost: 'border border-ink text-ink hover:bg-ink hover:text-bg',
+};
+---
+<a
+  href={href}
+  class:list={['inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 py-4 text-[15px] font-medium no-underline transition-colors', styles[variant], cls]}
+  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+  {...(download ? { download: '' } : {})}
+><slot /></a>

@@ -1,0 +1,49 @@
+<script>
+  const items = () => Array.from(document.querySelectorAll<HTMLDetailsElement>('details.acc'));
+  let suppress = false;
+  const quiet = (fn: () => void) => { suppress = true; fn(); setTimeout(() => (suppress = false), 80); };
+
+  function openFromHash() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (!el || !el.matches('details.acc')) return;
+    // Open instantly (no height animation) so the scroll target is stable.
+    const root = document.documentElement;
+    root.classList.add('no-acc-anim');
+    quiet(() => {
+      let p: HTMLElement | null = el;
+      while (p) { if (p instanceof HTMLDetailsElement) p.open = true; p = p.parentElement; }
+    });
+    el.scrollIntoView({ block: 'start' });
+    requestAnimationFrame(() => { el.scrollIntoView({ block: 'start' }); setTimeout(() => root.classList.remove('no-acc-anim'), 60); });
+    // Lazy images above the target can shift the layout; keep the target aligned until the reader scrolls.
+    const realign = () => el.scrollIntoView({ block: 'start' });
+    const stop = () => {
+      document.removeEventListener('load', realign, true);
+      ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach((t) => removeEventListener(t, stop));
+    };
+    document.addEventListener('load', realign, true);
+    ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach((t) => addEventListener(t, stop, { once: true, passive: true }));
+    setTimeout(stop, 2500);
+  }
+
+  items().forEach((d) => d.addEventListener('toggle', () => {
+    if (suppress) return;
+    if (d.open) history.replaceState(null, '', '#' + d.id);
+    else if (location.hash === '#' + d.id) history.replaceState(null, '', location.pathname + location.search);
+  }));
+
+  document.querySelectorAll<HTMLButtonElement>('[data-toggle-all]').forEach((btn) => {
+    const scope = items;
+    btn.addEventListener('click', () => {
+      const expand = btn.getAttribute('aria-pressed') !== 'true';
+      quiet(() => scope().forEach((d) => (d.open = expand)));
+      btn.setAttribute('aria-pressed', String(expand));
+      btn.textContent = expand ? 'Collapse all' : 'Expand all';
+    });
+  });
+
+  addEventListener('hashchange', openFromHash);
+  openFromHash();
+</script>

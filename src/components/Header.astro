@@ -1,0 +1,64 @@
+---
+import home from '../data/home.json';
+
+const links = [
+  { href: '/about', label: 'About' },
+  { href: '/resume', label: 'Resume' },
+  { href: '/work', label: 'Work' },
+  { href: '/side-projects', label: 'Side Projects' },
+];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => path === href || path.startsWith(href + '/');
+---
+<header class="sticky top-0 z-40 border-b border-line bg-bg/85 backdrop-blur-md">
+  <div class="wrap flex h-16 items-center justify-between gap-4">
+    <a href="/" class="font-mono text-[15px] font-medium tracking-tight text-ink no-underline">
+      {home.site.logo}<span class="hn-cursor text-accent" aria-hidden="true">_</span>
+    </a>
+
+    <nav aria-label="Main" class="hidden items-center gap-7 text-sm md:flex">
+      {links.map((l) => (
+        <a href={l.href} class:list={['link-grad py-1 text-ink hover:text-accent', isActive(l.href) && 'text-accent']} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
+      ))}
+      <a href="/#contact" class="rounded-full bg-ink px-[18px] py-3 text-sm font-medium text-bg no-underline transition-colors hover:bg-accent hover:text-bg">Let’s talk</a>
+    </nav>
+
+    <button id="menu-btn" type="button" class="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface md:hidden" aria-expanded="false" aria-controls="menu-drawer" aria-label="Open menu">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <path id="menu-ico-open" d="M2 5h14M2 9h14M2 13h14" />
+        <path id="menu-ico-close" d="M3 3l12 12M15 3L3 15" class="hidden" />
+      </svg>
+    </button>
+  </div>
+
+  <div id="menu-drawer" class="hidden border-t border-line bg-bg md:hidden" role="dialog" aria-modal="false" aria-label="Menu">
+    <nav aria-label="Mobile" class="wrap flex flex-col py-4">
+      {links.map((l) => (
+        <a href={l.href} class:list={['border-b border-line py-4 text-lg no-underline', isActive(l.href) ? 'text-accent' : 'text-ink']} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
+      ))}
+      <a href="/#contact" class="mt-5 self-start rounded-full bg-ink px-6 py-3 font-medium text-bg no-underline">Let’s talk</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('menu-btn') as HTMLButtonElement | null;
+  const drawer = document.getElementById('menu-drawer');
+  const icoOpen = document.getElementById('menu-ico-open');
+  const icoClose = document.getElementById('menu-ico-close');
+  if (btn && drawer) {
+    const set = (open: boolean) => {
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      drawer.classList.toggle('hidden', !open);
+      icoOpen?.classList.toggle('hidden', open);
+      icoClose?.classList.toggle('hidden', !open);
+    };
+    btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') { set(false); btn.focus(); }
+    });
+    drawer.addEventListener('click', (e) => { if ((e.target as HTMLElement).closest('a')) set(false); });
+    window.matchMedia('(min-width: 768px)').addEventListener('change', (m) => { if (m.matches) set(false); });
+  }
+</script>

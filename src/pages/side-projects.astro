@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import ToggleAll from '../components/ToggleAll.astro';
+import Accordion from '../components/Accordion.astro';
+import SideProject from '../components/SideProject.astro';
+import AccordionScript from '../components/AccordionScript.astro';
+
+const all = await getCollection('side-projects', (e) => !e.data.draft);
+const get = (id: string) => all.find((e) => e.id === id)!;
+const experience = ['pencil-philosophy', 'brandlab', 'hub-de-tana'].map(get);
+const competitions = ['la-roche-posay', 'talyvi'].map(get);
+---
+<Base title="Side Projects" description="Side projects in education, community and content: Pencil Philosophy, 101% Brandlab, Hub de Tana Coffee, and competition work including Vietnam Young Lions 2025.">
+  <section class="dot-grid border-b border-line">
+    <div class="wrap py-12 md:py-16">
+      <SectionLabel>SIDE PROJECTS</SectionLabel>
+      <h1 class="h1 m-0 font-serif text-[clamp(48px,7vw,88px)] font-normal leading-none tracking-[-0.02em]"><em>Beyond</em> the day job.</h1>
+      <p class="mb-0 mt-5 max-w-[620px] text-lg leading-relaxed text-body">Have a big passion for education, technology and content creation</p>
+    </div>
+  </section>
+  <section class="wrap py-12 md:py-16">
+    <div class="mb-6 flex items-center justify-between gap-4">
+      <div class="mono-label">OPEN ANY ITEM</div>
+      <ToggleAll />
+    </div>
+    <div class="flex flex-col gap-4">
+      {experience.map((e) => (
+        <Accordion id={e.id} date={e.data.dateLabel} title={e.data.title} org={e.data.org} tag={(e.data as any).role}>
+          <SideProject entry={e} />
+        </Accordion>
+      ))}
+      <Accordion id="competition-projects" date="Competitions" title="Competition projects" org="Marketing, business and strategic planning" tag="2 projects">
+        <p class="m-0">This section showcases a selection of projects and competitions I have participated in, highlighting my skills in marketing, business and strategic planning.</p>
+        <div class="flex flex-col gap-3">
+          {competitions.map((e) => (
+            <Accordion id={e.id} level={1} date={e.data.dateLabel} title={e.data.title} org={e.data.org} tag={(e.data as any).award}>
+              <SideProject entry={e} />
+            </Accordion>
+          ))}
+        </div>
+      </Accordion>
+    </div>
+  </section>
+  <AccordionScript />
+</Base>

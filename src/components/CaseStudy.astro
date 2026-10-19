@@ -1,0 +1,70 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import MetaBar from './MetaBar.astro';
+import MetricCard from './MetricCard.astro';
+import PullQuote from './PullQuote.astro';
+import Gallery from './Gallery.astro';
+import LuckyMoneyDeck from './LuckyMoneyDeck.astro';
+import NomadHubDeck from './NomadHubDeck.astro';
+
+interface Props { entry: CollectionEntry<'work'> }
+const { entry } = Astro.props;
+const d = entry.data as any;
+const { Content } = await render(entry);
+const metrics: { value: string; label: string }[] = d.metrics ?? [];
+const quotes: string[] = d.pullQuotes ?? [];
+const images: string[] = d.images ?? [];
+const showLearned = d.learned && !String(d.learned).startsWith('TODO');
+---
+{d.links && <p class="m-0 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs">{d.links.map((l: any) => <a href={l.href} target="_blank" rel="noopener noreferrer" class="link-grad text-accent">{l.label} ↗</a>)}</p>}
+<MetaBar role={d.role} client={d.client ?? d.org} timeline={d.timeline ?? d.dateLabel} category={d.kind} tools={d.tools} />
+
+{metrics.length > 0 && (
+  <ul class="m-0 grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-3 lg:grid-cols-4">
+    {metrics.map((m) => <li><MetricCard value={m.value} label={m.label} /></li>)}
+  </ul>
+)}
+
+{quotes.map((q) => <PullQuote>{q}</PullQuote>)}
+
+<div class="case-body"><Content /></div>
+
+{d.contributions && (
+  <div class="grid gap-3 md:grid-cols-3">
+    {d.contributions.map((c: any, i: number) => (
+      <div class="rounded-xl border border-line bg-bg p-4">
+        <div class="mb-1 font-mono text-xs text-accent">0{i + 1}</div>
+        <h4 class="m-0 mb-1.5 text-base font-semibold text-ink">{c.title}</h4>
+        <p class="m-0 text-[14.5px] leading-relaxed text-body">{c.body}</p>
+      </div>
+    ))}
+  </div>
+)}
+
+{d.deck && d.deckType === 'lucky' && <LuckyMoneyDeck deck={d.deck} />}
+{d.deck && d.deckType === 'nomad' && <NomadHubDeck deck={d.deck} />}
+
+{images.length > 0 && !d.deck && (
+  <Gallery
+    group={`g-${entry.id}`}
+    class={images.length === 4 ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-1 sm:grid-cols-2'}
+    items={images.map((name, i) => ({ name, alt: `${d.client ?? d.org}: screenshot ${i + 1} of ${images.length}` }))}
+  />
+)}
+
+{d.tiktokLinks && (
+  <p class="m-0 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs">
+    {d.tiktokLinks.map((u: string, i: number) => <a href={u} target="_blank" rel="noopener noreferrer" class="link-grad text-accent">TikTok video {i + 1} ↗</a>)}
+  </p>
+)}
+
+{d.externalLink && (
+  <p class="m-0 font-mono text-xs"><a href={d.externalLink} target="_blank" rel="noopener noreferrer" class="link-grad text-accent">Open the community ↗</a></p>
+)}
+
+{showLearned && (
+  <aside class="rounded-xl border border-dashed border-line bg-surface p-4">
+    <div class="mono-label mb-1.5 flex items-center gap-2">WHAT I LEARNED{d.learnedDraft && <span class="rounded bg-chip px-1.5 py-0.5 text-[10px] text-chip-text">DRAFT</span>}</div>
+    <p class="m-0 text-[15.5px] leading-relaxed text-ink">{d.learned}</p>
+  </aside>
+)}

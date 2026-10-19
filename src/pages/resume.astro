@@ -1,0 +1,134 @@
+---
+import Base from '../layouts/Base.astro';
+import home from '../data/home.json';
+import resume from '../data/resume.json';
+import SectionLabel from '../components/SectionLabel.astro';
+import Button from '../components/Button.astro';
+import Timeline from '../components/Timeline.astro';
+import Gallery from '../components/Gallery.astro';
+import { highlightNumbers } from '../lib/text';
+
+const r = resume as any;
+const s = home.site;
+
+const education = r.education.map((e: any) => ({
+  date: e.dates,
+  title: e.degree,
+  subtitle: `${e.school} · ${e.location}`,
+  bullets: e.details,
+}));
+const experience = r.experience.flatMap((c: any) =>
+  c.roles.map((role: any) => ({
+    date: role.dates,
+    title: role.title,
+    subtitle: `${c.company} · ${c.location}`,
+    note: role.note,
+    bullets: role.bullets,
+    footnote: role.footnote,
+  })),
+);
+const leadership = r.leadership.flatMap((o: any) =>
+  o.roles.map((role: any) => ({
+    date: role.dates,
+    title: role.title,
+    subtitle: o.org,
+    description: role.description,
+    bullets: role.bullets,
+    images: (role.images ?? []).map((name: string) => ({ name, alt: 'AYOSE certificate of participation, ASEAN Youth Conference' })),
+  })),
+);
+const achAlt: Record<string, string> = {
+  'p04-11.jpg': 'Vietnam Young Lions Facebook post announcing the Silver winner',
+  'p15-04.jpg': 'The team on stage at the Vietnam Young Lions grand finale',
+  'p04-07.jpg': 'Certificate: Top 11, Vietnam Social Innovation Challenge',
+};
+const more = [
+  { name: 'p04-10.jpg', alt: 'Top 15, I-Startup 2022 announcement', caption: 'Top 15, I-Startup 2022' },
+  { name: 'p04-08.jpg', alt: 'Top 30 outstanding projects list', caption: 'Top 30 outstanding projects' },
+];
+const skillChips: string[] = r.skills.Skills.split(';').map((x: string) => x.trim()).filter(Boolean);
+const sections = [
+  { n: '01', label: 'EDUCATION' },
+  { n: '02', label: 'ACHIEVEMENTS' },
+  { n: '03', label: 'WORK EXPERIENCE' },
+  { n: '04', label: 'LEADERSHIP & ACTIVITIES' },
+  { n: '05', label: 'SKILLS & INTERESTS' },
+];
+---
+<Base title="Resume" description="Resume of Phuong Minh (Haley) Nguyen: education, achievements, work experience at Zalopay, Hello Digital Vietnam and FPT Software, and leadership activities.">
+  <section class="dot-grid border-b border-line">
+    <div class="wrap flex flex-wrap items-end justify-between gap-8 py-12 md:py-16">
+      <div class="flex flex-col gap-5">
+        <SectionLabel class="">RESUME</SectionLabel>
+        <h1 class="h1 m-0 font-serif text-[clamp(44px,6.5vw,80px)] font-normal leading-none tracking-[-0.02em]">{r.name}</h1>
+        <p class="m-0 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[13px] text-body">
+          <a href={`mailto:${s.email}`} class="link-grad text-body">{s.email}</a>
+          <a href={s.phoneHref} class="link-grad text-body">{s.phone}</a>
+          <a href={s.linkedin} target="_blank" rel="noopener noreferrer" class="link-grad text-body">LinkedIn</a>
+          <span>{r.contact.location}</span>
+        </p>
+      </div>
+      <Button href="/cv.pdf" download>Download CV ↓</Button>
+    </div>
+  </section>
+
+  <div class="wrap flex flex-col gap-14 py-10 md:py-14">
+    <!-- 01 Education -->
+    <section aria-labelledby="edu">
+      <SectionLabel>{sections[0].n} — {sections[0].label}</SectionLabel>
+      <h2 id="edu" class="sr-only">Education</h2>
+      <Timeline items={education} group="edu" />
+    </section>
+
+    <!-- 02 Achievements -->
+    <section aria-labelledby="ach">
+      <SectionLabel>{sections[1].n} — {sections[1].label}</SectionLabel>
+      <h2 id="ach" class="sr-only">Achievements</h2>
+      <div class="flex flex-col gap-10">
+        {r.achievements.map((a: any, i: number) => (
+          <article class="grid gap-6 border-t border-line pt-8 lg:grid-cols-[minmax(0,1fr)_420px]">
+            <div class="flex flex-col gap-2">
+              <div class="font-mono text-xs uppercase tracking-wide text-muted">{a.date}</div>
+              <h3 class="m-0 font-serif text-[clamp(24px,3vw,32px)] font-normal leading-tight text-ink">{a.title}</h3>
+              <p class="m-0 text-[16px] leading-[1.7] text-body" set:html={highlightNumbers(a.description)} />
+              {a.project && <p class="m-0 text-[16px] leading-[1.7] text-body">{a.project}</p>}
+            </div>
+            <Gallery group={`ach-${i}`} class={a.images.length > 1 ? 'grid-cols-2' : 'grid-cols-1 max-w-[260px]'} items={a.images.map((name: string) => ({ name, alt: achAlt[name] ?? 'Achievement image' }))} />
+          </article>
+        ))}
+        <div class="border-t border-line pt-8">
+          <div class="mono-label mb-3">MORE RECOGNITION</div>
+          <Gallery group="ach-more" class="grid-cols-2 max-w-[460px]" items={more} />
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 Work experience -->
+    <section aria-labelledby="exp">
+      <SectionLabel>{sections[2].n} — {sections[2].label}</SectionLabel>
+      <h2 id="exp" class="sr-only">Work experience</h2>
+      <Timeline items={experience} group="exp" />
+    </section>
+
+    <!-- 04 Leadership -->
+    <section aria-labelledby="lead">
+      <SectionLabel>{sections[3].n} — {sections[3].label}</SectionLabel>
+      <h2 id="lead" class="sr-only">Leadership and activities</h2>
+      <Timeline items={leadership} group="lead" />
+    </section>
+
+    <!-- 05 Skills -->
+    <section aria-labelledby="skills">
+      <SectionLabel>{sections[4].n} — {sections[4].label}</SectionLabel>
+      <h2 id="skills" class="sr-only">Skills and interests</h2>
+      <dl class="m-0 flex flex-col gap-8">
+        <div>
+          <dt class="mono-label mb-3">SKILLS</dt>
+          <dd class="m-0"><ul class="m-0 flex list-none flex-wrap gap-2 p-0">{skillChips.map((c) => <li class="rounded-full border border-line bg-surface px-3.5 py-1.5 text-[14.5px] text-ink">{c}</li>)}</ul></dd>
+        </div>
+        <div><dt class="mono-label mb-2">LANGUAGES</dt><dd class="m-0 text-[16px] leading-relaxed text-body">{r.skills.Languages}</dd></div>
+        <div><dt class="mono-label mb-2">INTERESTS</dt><dd class="m-0 text-[16px] leading-relaxed text-body">{r.skills.Interests}</dd></div>
+      </dl>
+    </section>
+  </div>
+</Base>

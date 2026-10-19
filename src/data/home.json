@@ -1,0 +1,244 @@
+{
+  "site": {
+    "name": "Haley Nguyen",
+    "logo": "phuongminh.nguyen",
+    "email": "phuongminhminh.works@gmail.com",
+    "phone": "(+84) 985 254 843",
+    "phoneHref": "tel:+84985254843",
+    "linkedin": "https://www.linkedin.com/in/phuongminhminh/",
+    "linkedinLabel": "LinkedIn · Phuong Minh Nguyen",
+    "copyright": "© 2026 Brave-Haley",
+    "socials": [
+      {
+        "label": "Instagram · @bravehaley_",
+        "href": "https://www.instagram.com/bravehaley_/"
+      },
+      {
+        "label": "Facebook · Brave-Haley",
+        "href": "https://www.facebook.com/profile.php?id=61580958312006"
+      },
+      {
+        "label": "Couchsurfing · where I meet people on solo travel",
+        "href": "https://www.couchsurfing.com/c/users/bravebongsen"
+      }
+    ]
+  },
+  "hero": {
+    "photo": {
+      "name": "haley-hero.jpg",
+      "alt": "Haley at the Effie Awards Singapore 2025 backdrop",
+      "caption": "Vietnam's representative at Effie Awards Singapore 2025"
+    },
+    "status": "status: open to opportunities in education & tech for good",
+    "h1": "Brave-Haley.",
+    "tagline": "Growth - Tech - Education Enthusiast | Community Builder | Solo Traveler",
+    "intro": "Hi, I'm Haley - a free spirit, a lifelong learner, and someone who believes the best lessons often happen outside the classroom. Since 16, I have been taking solo trips across Southeast Asia, hitchhiking and sleeping on strangers' couches. Along the way, I grew endlessly curious about people and cultures: how they live, what they value, and how I can create impact to change people's lives.",
+    "terminal": [
+      {
+        "cmd": "skillset",
+        "out": [
+          "communication & strategic planning",
+          "partnership & community builder",
+          "data analysis (for decision making)",
+          "project management & class coordination"
+        ]
+      },
+      {
+        "cmd": "past roles",
+        "out": [
+          "· growth marketer/project manager/strategic planner"
+        ]
+      }
+    ]
+  },
+  "metrics": [
+    {
+      "value": "40+",
+      "label": "Clients in strategic planning (branding/IMC/digital)",
+      "todo": "Not in PDF or CV (CV says portfolio of 20 SME clients for ads). Confirm source."
+    },
+    {
+      "value": "60+",
+      "label": "Creators I managed in a UGC project"
+    },
+    {
+      "value": "50+",
+      "label": "Partners/enterprises I used to work with in educational projects",
+      "todo": "Not in PDF or CV (CV: 20+ orgs at Pencil Philosophy, 10+ brands at TEDx). Confirm."
+    },
+    {
+      "value": "Silver",
+      "label": "Winner of Vietnam Young Lions 2025"
+    }
+  ],
+  "metricsTodo": "Reference has 6 cells, 2 empty. Rendered 4 for now. Ask: fill the 2 or keep 4?",
+  "now": {
+    "label": "01 — NOW",
+    "photo": {
+      "name": "haley-zalopay.jpg",
+      "alt": "Haley at the Zalopay 'See Now, Scan Now' booth"
+    },
+    "heading": "Growth at <em>Zalopay</em> - one of Vietnam's leading fintechs.",
+    "cards": [
+      {
+        "date": "JUN 2025 → NOW",
+        "title": "Growth Marketing",
+        "body": "Reading the data, tracking user segments. Turning numbers into insights and actions."
+      },
+      {
+        "date": "MAY 2026 → NOW",
+        "title": "UGC Program Owner",
+        "body": "Financial Services. Built the creator program from scratch: operating model, incentives and analytics for 60+ creators on social media platforms (Meta & TikTok)"
+      }
+    ],
+    "todo": "Reference says Meta & TikTok; CV says Threads & TikTok. Which?"
+  },
+  "work": {
+    "label": "02 — HIGHLIGHTED WORK",
+    "heading": "Key Projects",
+    "filters": [
+      "All",
+      "Growth",
+      "Strategy",
+      "Community",
+      "Product"
+    ],
+    "cards": [
+      {
+        "num": "01",
+        "category": "growth",
+        "client": "Zalopay",
+        "link": "/work#qr-transfer",
+        "title": "Growing QR transfer users",
+        "summary": "Segment analysis, campaigns and user research with the Product Owner to grow the number of users adopting Scan QR to transfer.",
+        "chip": "Beat the 2025 annual KPI",
+        "image": "haley-zalopay.jpg",
+        "draft": true,
+        "imagePos": "50% 36%"
+      },
+      {
+        "num": "02",
+        "category": "community",
+        "client": "Zalopay",
+        "link": "/work#zalopay-ugc",
+        "title": "A UGC program for financial services",
+        "summary": "Built from the ground up: creator operating model, incentives and analytics for savings, stocks and insurance content.",
+        "chip": "60+ creators · 5M+ views/month",
+        "image": "zalopay-ugc-cover.jpg",
+        "todo": "PDF says '5M+ views' in total, not per month. Which is correct?"
+      },
+      {
+        "num": "03",
+        "category": "growth",
+        "client": "Hello Digital Vietnam",
+        "link": "/work#hello-digital",
+        "title": "Digital & Communication Planning for SMEs",
+        "summary": "Digital performance campaigns for SMEs in Hanoi and Ho Chi Minh City across fashion, FnB and retail, from client brief to ad optimization.",
+        "chip": "200M VND monthly ad budget",
+        "image": "home-card-hello.jpg"
+      },
+      {
+        "num": "04",
+        "category": "growth",
+        "client": "Zalopay",
+        "link": "/work#lucky-money-tree",
+        "title": "Lucky Money Tree, Tết 2026",
+        "summary": "Every QR transfer unlocked a red envelope, with a Super Cash envelope worth up to 10 million VND released only on New Year's Eve.",
+        "chip": "Super Cash envelope up to 10M VND",
+        "image": "lmt-app-ui.jpg"
+      },
+      {
+        "num": "05",
+        "category": "community",
+        "client": "Panasonic",
+        "link": "/work#panasonic-wellness",
+        "title": "From product group to wellness community",
+        "summary": "A 2025 plan for a top-3 appliance community: Join → Engage → Co-create, with UGC challenges and a 48-episode series.",
+        "chip": "Plan: 50K → 75K members",
+        "image": "p11-01.jpg"
+      },
+      {
+        "num": "06",
+        "category": "strategy",
+        "client": "1C Vietnam",
+        "link": "/work#1c-vietnam",
+        "title": "From software vendor to growth partner",
+        "summary": "Shifted the ERP conversation from features to business impact, with a four-stage B2B funnel for four stakeholder groups.",
+        "chip": "rebranding project",
+        "image": "home-card-1c.jpg"
+      }
+    ],
+    "todo": "Cards 01-03 and 06 have no cover image. Card 06 (1C Vietnam) replaced TALYVI on request."
+  },
+  "sideProjects": {
+    "label": "03 — SIDE PROJECTS",
+    "headingOptions": [
+      "Beyond the day job.",
+      "Side projects, <em>serious</em> about impact.",
+      "Learning in public, <em>outside</em> the office."
+    ],
+    "heading": null,
+    "headingTodo": "Pick one of headingOptions (null until chosen).",
+    "items": [
+      {
+        "slug": "pencil-philosophy",
+        "num": "01",
+        "title": "Pencil Philosophy - Project Manager",
+        "sub": "Liberal Arts Education NGO",
+        "image": "pencil-timeline.webp",
+        "imagePos": "50% 50%"
+      },
+      {
+        "slug": "brandlab",
+        "num": "02",
+        "title": "101% Brandlab - Project Manager",
+        "sub": "Educational Academy",
+        "image": "p13-03.jpg",
+        "imagePos": "50% 45%"
+      },
+      {
+        "slug": "hub-de-tana",
+        "num": "03",
+        "title": "Content Creator",
+        "sub": "Travel & FnB Content",
+        "image": "p14-03.jpg",
+        "imagePos": "50% 60%"
+      }
+    ]
+  },
+  "awards": {
+    "label": "04 — RECOGNITION",
+    "heading": "Awards & <em>Achievements</em>",
+    "items": [
+      {
+        "year": "2025",
+        "title": "Silver Winner, Digital Category · Industry Practitioner League",
+        "org": "Vietnam Young Lions"
+      },
+      {
+        "year": "2022",
+        "title": "Top 15, I-Startup Competition",
+        "org": "I-Startup 2022"
+      },
+      {
+        "year": "2021",
+        "title": "Top 11, Vietnam Social Innovation Challenge (TALYVI)",
+        "org": "VCCI"
+      },
+      {
+        "year": "2020",
+        "title": "Delegate, one of 100 youth from 10 ASEAN countries",
+        "org": "ASEAN Youth Conference"
+      }
+    ]
+  },
+  "collaborate": {
+    "label": "OPEN TO COLLABORATE",
+    "heading": "Working on education, youth development or tech for good?",
+    "body": "Alongside my full-time role, I'm actively looking for side projects with NGOs, educators, and mission-driven teams, especially in education, youth development, and tech for good.",
+    "cta": "Start a conversation →"
+  },
+  "footer": {
+    "heading": "The best projects start with a conversation. <em>Let's have one!</em>"
+  }
+}

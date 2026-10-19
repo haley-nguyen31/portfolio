@@ -1,0 +1,22 @@
+---
+import Img from './Img.astro';
+interface Props {
+  num: string; category: string; client: string; title: string; summary: string; chip: string;
+  link: string; image?: string | null; imagePos?: string; draft?: boolean; todo?: string;
+}
+const { num, category, client, title, summary, chip, link, image, imagePos = '50% 0%' } = Astro.props;
+---
+<a href={link} data-cat={category} class="project-card group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface text-ink no-underline transition-transform duration-300 hover:-translate-y-1 hover:border-accent">
+  <div class="dot-grid relative flex h-[200px] items-end justify-between border-b border-line bg-cover p-[18px]" style="background-size:16px 16px;background-color:var(--color-cover)">
+    {image && <Img name={image} alt="" class="absolute inset-0 h-full w-full object-cover" style={`object-position:${imagePos}`} sizes="(min-width:1024px) 380px, 100vw" />}
+    <span class:list={['font-serif leading-[0.8]', image ? 'absolute left-3 top-3 rounded-md bg-surface/90 px-2 pb-1 pt-1.5 text-2xl text-[#6b6b76]' : 'relative text-6xl text-[#8A8A94]']}>{num}</span>
+  </div>
+  <div class="flex flex-grow flex-col gap-2.5 px-[22px] pb-6 pt-[22px]">
+    <div class="flex justify-between gap-3 font-mono text-[11.5px] uppercase tracking-[0.06em] text-muted">
+      <span>{client}</span><span class="text-accent">{category}</span>
+    </div>
+    <h3 class="m-0 text-xl font-semibold leading-snug">{title}</h3>
+    <p class="m-0 flex-grow text-[14.5px] leading-relaxed text-body">{summary}</p>
+    <div class="mt-1.5 self-start rounded-md bg-chip px-2.5 py-1.5 font-mono text-xs text-chip-text">{chip}</div>
+  </div>
+</a>

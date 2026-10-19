@@ -1,0 +1,25 @@
+---
+interface Props {
+  role?: string | null;
+  client?: string | null;
+  timeline?: string | null;
+  category?: string | null;
+  tools?: string[] | null;
+  categoryLabel?: string;
+}
+const { role, client, timeline, category, tools, categoryLabel = 'Category' } = Astro.props;
+const rows = [
+  ['Role', role], ['Client', client], ['Timeline', timeline], [categoryLabel, category],
+  ['Tools', tools && tools.length ? tools.join(', ') : null],
+].filter(([, v]) => v) as [string, string][];
+---
+{rows.length > 0 && (
+  <dl class="my-6 grid grid-cols-2 gap-x-6 gap-y-4 rounded-xl border border-line bg-surface p-5 sm:grid-cols-3 lg:grid-cols-5">
+    {rows.map(([k, v]) => (
+      <div>
+        <dt class="mono-label">{k.toUpperCase()}</dt>
+        <dd class="m-0 mt-1 text-[15px] text-ink">{v}</dd>
+      </div>
+    ))}
+  </dl>
+)}

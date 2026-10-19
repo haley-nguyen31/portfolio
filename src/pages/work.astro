@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import ToggleAll from '../components/ToggleAll.astro';
+import CompanyBlock from '../components/CompanyBlock.astro';
+import AccordionScript from '../components/AccordionScript.astro';
+
+const all = await getCollection('work', (e) => !e.data.draft);
+const get = (id: string) => all.find((e) => e.id === id)!;
+// Explicit order so reordering needs one edit here.
+const groups = [
+  { id: 'zalopay', label: 'KEY PROJECTS', kids: ['qr-transfer', 'lucky-money-tree', 'zalopay-ugc'] },
+  { id: 'hello-digital', label: 'STRATEGIC PLANNING PROJECTS', kids: ['1c-vietnam', 'picenza-coliving', 'panasonic-wellness', 'lotte-mall'] },
+  { id: 'fpt-software', label: '', kids: [] },
+];
+---
+<Base title="Work" description="Professional work: growth marketing at Zalopay, digital performance and strategic planning at Hello Digital Vietnam, and global marketing at FPT Software.">
+  <section class="dot-grid border-b border-line">
+    <div class="wrap py-12 md:py-16">
+      <SectionLabel>PROFESSIONAL WORKS</SectionLabel>
+      <h1 class="h1 m-0 font-serif text-[clamp(48px,7vw,88px)] font-normal leading-none tracking-[-0.02em]">Ideas, <em>proven in numbers</em>.</h1>
+      <p class="mb-0 mt-5 max-w-[620px] text-lg leading-relaxed text-body">Growth, communication &amp; strategic planning</p>
+    </div>
+  </section>
+  <section class="wrap py-12 md:py-16">
+    <div class="mb-6 flex items-center justify-between gap-4">
+      <div class="mono-label">03 ROLES · OPEN ANY ITEM</div>
+      <ToggleAll />
+    </div>
+    <div class="flex flex-col gap-4">
+      {groups.map((g) => <CompanyBlock entry={get(g.id)} children={g.kids.map(get)} childLabel={g.label} />)}
+    </div>
+  </section>
+  <AccordionScript />
+</Base>

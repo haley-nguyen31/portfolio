@@ -1,0 +1,19 @@
+node_modules/
+dist/
+.astro/
+.netlify/
+.DS_Store
+.env
+.env.*
+*.log
+# Source material (large originals); keep out of the repo
+/source/
+/images/
+/cv.pdf
+/portfolio.pdf
+/home-design-reference.html
+/screenshots/
+/lh/
+.claude/
+/PROMPT.md
+/PHASE0-REPORT.md

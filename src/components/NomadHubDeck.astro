@@ -1,0 +1,167 @@
+---
+import PullQuote from './PullQuote.astro';
+import MetricCard from './MetricCard.astro';
+
+interface Props { deck: any }
+const { deck: d } = Astro.props;
+const slides = ['Cover', 'Brief', 'Market', 'Hai Ba Trung', 'Audience', 'Key takeaways', 'Strategy', 'Brand difference', 'Positioning', 'Naming'];
+const total = String(slides.length).padStart(2, '0');
+const no = (i: number) => `${String(i + 1).padStart(2, '0')} / ${total}`;
+const card = 'rounded-2xl border border-line bg-surface p-5 sm:p-7';
+const head = 'mb-5 flex items-center justify-between gap-3 font-mono text-[11px] uppercase tracking-[0.08em] text-muted';
+const sub = 'mono-label mb-2';
+const ul = 'm-0 flex list-disc flex-col gap-1.5 pl-5 text-[14.5px] leading-relaxed text-body marker:text-accent';
+---
+<div class="flex flex-col gap-6" data-deck>
+  <!-- Cover -->
+  <section class="rounded-2xl bg-[#0b0b0d] p-6 text-bg sm:p-10" aria-label={slides[0]}>
+    <div class="font-mono text-[11px] uppercase tracking-[0.08em] text-footer-accent">{d.cover.kicker}</div>
+    <h3 class="m-0 mt-3 max-w-xl font-serif text-[clamp(32px,5vw,52px)] font-normal leading-none">{d.cover.title}</h3>
+    <p class="m-0 mt-3 font-mono text-sm text-[#A3A3AD]">{d.cover.subtitle}</p>
+    <div class="mt-6 font-mono text-[11px] text-[#9a9aa5]">{no(0)}</div>
+  </section>
+
+  <!-- Brief -->
+  <section class={card} aria-label={slides[1]}>
+    <div class={head}><span>The brief</span><span>{no(1)}</span></div>
+    <p class="m-0 mb-6 font-serif text-[clamp(22px,2.6vw,28px)] leading-snug text-ink">{d.brief.request}</p>
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="rounded-xl border border-line bg-bg p-4"><div class={sub}>THE CLIENT</div><p class="m-0 text-[14.5px] leading-relaxed text-body">{d.brief.client}</p></div>
+      <div class="rounded-xl border border-line bg-bg p-4"><div class={sub}>THE PROJECT</div><p class="m-0 text-[14.5px] leading-relaxed text-body">{d.brief.project}</p></div>
+    </div>
+    <div class="mt-6 grid gap-4 md:grid-cols-2">
+      <div><div class={sub}>BRAND STRENGTHS · GROUP</div><ul class={ul}>{d.strengths.group.map((x: string) => <li>{x}</li>)}</ul></div>
+      <div><div class={sub}>BRAND STRENGTHS · THE BUILDING</div><ul class={ul}>{d.strengths.building.map((x: string) => <li>{x}</li>)}</ul></div>
+    </div>
+  </section>
+
+  <!-- Market -->
+  <section class={card} aria-label={slides[2]}>
+    <div class={head}><span>{d.market.title}</span><span>{no(2)}</span></div>
+    <div class="grid gap-4 md:grid-cols-3">
+      {d.market.tiers.map((t: any, i: number) => (
+        <article class="flex flex-col gap-3 rounded-xl border border-line bg-bg p-4">
+          <div class="font-mono text-xs text-accent">TIER 0{i + 1}</div>
+          <h4 class="m-0 text-lg font-semibold text-ink">{t.name}</h4>
+          <div class="font-mono text-[15px] font-medium text-ink">{t.price}</div>
+          <dl class="m-0 flex flex-col gap-2 text-[13.5px] leading-relaxed text-body">
+            <div><dt class="font-mono text-[11px] uppercase tracking-wide text-muted">Models</dt><dd class="m-0">{t.models}</dd></div>
+            <div><dt class="font-mono text-[11px] uppercase tracking-wide text-muted">Audience</dt><dd class="m-0">{t.audience}</dd></div>
+            <div><dt class="font-mono text-[11px] uppercase tracking-wide text-muted">Amenities</dt><dd class="m-0">{t.amenities}</dd></div>
+            {t.decor && <div><dt class="font-mono text-[11px] uppercase tracking-wide text-muted">Decor</dt><dd class="m-0">{t.decor}</dd></div>}
+          </dl>
+        </article>
+      ))}
+    </div>
+    <PullQuote>{d.market.takeaway}</PullQuote>
+  </section>
+
+  <!-- Area -->
+  <section class={card} aria-label={slides[3]}>
+    <div class={head}><span>{d.area.title}</span><span>{no(3)}</span></div>
+    <p class="m-0 mb-5 font-serif text-[clamp(22px,2.6vw,28px)] leading-snug text-ink">{d.area.gap}</p>
+    <ul class="m-0 mb-6 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-3">{d.area.stats.map((m: any) => <li><MetricCard value={m.value} label={m.label} /></li>)}</ul>
+    <div class="grid gap-6 md:grid-cols-2">
+      <div><div class={sub}>RENTAL TIERS</div><ul class={ul}>{d.area.tiers.map((x: string) => <li>{x}</li>)}</ul></div>
+      <div><div class={sub}>TWO MAIN RENTER GROUPS</div><ul class={ul}>{d.area.renters.map((x: string) => <li>{x}</li>)}</ul></div>
+      <div><div class={sub}>THE AREA · PROS</div><ul class={ul}>{d.area.pros.map((x: string) => <li>{x}</li>)}</ul></div>
+      <div><div class={sub}>THE AREA · CONS</div><ul class={ul}>{d.area.cons.map((x: string) => <li>{x}</li>)}</ul></div>
+    </div>
+    <p class="m-0 mt-6 rounded-xl border border-dashed border-line p-4 text-[14.5px] leading-relaxed text-ink"><strong class="font-mono text-xs font-medium uppercase tracking-wide text-accent">Takeaway · </strong>{d.area.takeaway}</p>
+  </section>
+
+  <!-- Personas -->
+  <section class={card} aria-label={slides[4]}>
+    <div class={head}><span>Target audience, two personas</span><span>{no(4)}</span></div>
+    <div class="grid gap-5 lg:grid-cols-2">
+      {d.personas.map((p: any, i: number) => (
+        <article class="flex flex-col gap-4 rounded-xl border border-line bg-bg p-5">
+          <div><div class="font-mono text-xs text-accent">PERSONA 0{i + 1}</div><h4 class="m-0 font-serif text-[28px] font-normal text-ink">{p.name}</h4><div class="font-mono text-xs text-muted">{p.tag}</div></div>
+          <ul class={ul}>{p.facts.map((f: string) => <li>{f}</li>)}</ul>
+          <dl class="m-0 flex flex-col gap-3">
+            {[['Truth', p.truth], ['Tension', p.tension], ['Motivation', p.motivation]].map(([k, v]) => <div><dt class="font-mono text-xs uppercase tracking-wide text-accent">{k}</dt><dd class="m-0 mt-0.5 text-[14.5px] leading-relaxed text-body">{v}</dd></div>)}
+          </dl>
+          <blockquote class="m-0 border-l-2 border-accent pl-4 font-serif text-lg italic leading-snug text-ink">“{p.insight}”</blockquote>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- Takeaways -->
+  <section class={card} aria-label={slides[5]}>
+    <div class={head}><span>Key takeaways</span><span>{no(5)}</span></div>
+    <div class="grid gap-4 md:grid-cols-3">
+      {d.takeaways.map((t: any, i: number) => (
+        <div class="rounded-xl border border-line bg-bg p-5"><div class="mb-1 font-mono text-xs text-accent">0{i + 1} · {t.title.toUpperCase()}</div><p class="m-0 text-[14.5px] leading-relaxed text-body">{t.text}</p></div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Strategy -->
+  <section class={card} aria-label={slides[6]}>
+    <div class={head}><span>{d.strategy.title}</span><span>{no(6)}</span></div>
+    <div class={sub}>REFERENCE MODELS</div>
+    <div class="grid gap-4 md:grid-cols-3">
+      {d.strategy.models.map((m: any) => (
+        <article class="flex flex-col gap-2 rounded-xl border border-line bg-bg p-4">
+          <h4 class="m-0 text-base font-semibold text-ink">{m.name}</h4>
+          <p class="m-0 text-[14px] leading-relaxed text-body">{m.desc}</p>
+          <p class="m-0 mt-auto font-mono text-xs text-muted">{m.examples}</p>
+        </article>
+      ))}
+    </div>
+    <div class="mb-3 mt-8 font-mono text-[11px] uppercase tracking-[0.08em] text-muted">PROPOSED BRAND ARCHITECTURE · ENDORSED BRAND</div>
+    <div class="flex flex-col items-start gap-3 rounded-xl bg-ink p-5 text-bg sm:p-6">
+      <div class="rounded-full border border-[#3A3A42] px-4 py-1.5 font-mono text-sm">{d.strategy.architecture.parent}</div>
+      <div class="flex flex-wrap gap-2" aria-label="Brand lines">
+        {d.strategy.architecture.lines.map((l: string, i: number) => <span class:list={['rounded-full px-3.5 py-1.5 font-mono text-xs', i === 0 ? 'bg-footer-accent text-ink' : 'border border-[#3A3A42] text-[#d7d7de]']}>{l}</span>)}
+      </div>
+      <p class="m-0 font-serif text-[20px] italic leading-snug text-[#d7d7de]">{d.strategy.architecture.endorsement}</p>
+    </div>
+    <div class="mt-5 grid gap-6 md:grid-cols-2">
+      <div><div class={sub}>WHY AN ENDORSED BRAND</div><ul class={ul}>{d.strategy.architecture.why.map((x: string) => <li>{x}</li>)}</ul></div>
+      <div><div class={sub}>NAMING TYPES CONSIDERED</div><ul class="m-0 flex list-none flex-wrap gap-2 p-0">{d.strategy.namingTypes.map((x: string) => <li class="rounded-full border border-line bg-bg px-3 py-1 font-mono text-xs text-body">{x}</li>)}</ul></div>
+    </div>
+  </section>
+
+  <!-- Difference -->
+  <section class={card} aria-label={slides[7]}>
+    <div class={head}><span>Brand difference</span><span>{no(7)}</span></div>
+    <div class={sub}>THE TENSION</div>
+    <p class="m-0 text-[15.5px] leading-relaxed text-body">{d.difference.tension}</p>
+    <div class="mt-4"><div class={sub}>THE INSIGHT</div><PullQuote>{d.difference.insight}</PullQuote></div>
+    <div class={sub}>THE ROLE OF THE BRAND</div>
+    <ol class="m-0 grid list-none gap-3 p-0 sm:grid-cols-2">{d.difference.role.map((r: string, i: number) => <li class="flex gap-3 rounded-xl border border-line bg-bg p-4 text-[14.5px] leading-relaxed text-body"><span class="font-mono text-xs leading-[1.9] text-accent">0{i + 1}</span>{r}</li>)}</ol>
+  </section>
+
+  <!-- Positioning -->
+  <section class={card} aria-label={slides[8]}>
+    <div class={head}><span>Positioning · brand key</span><span>{no(8)}</span></div>
+    <div class="rounded-xl bg-ink p-6 text-bg sm:p-8">
+      <div class="font-serif text-[clamp(30px,4.5vw,48px)] leading-none">{d.positioning.statement}</div>
+      <div class="mt-2 font-mono text-sm text-footer-accent">{d.positioning.tagline}</div>
+      <p class="m-0 mt-4 max-w-xl text-[15px] leading-relaxed text-[#d7d7de]">{d.positioning.lead}</p>
+    </div>
+    <div class="mt-5 grid gap-5 md:grid-cols-2">
+      <div class="rounded-xl border border-line bg-bg p-4"><div class={sub}>VALUES, BELIEFS &amp; PERSONALITY</div><p class="m-0 mb-3 text-[14.5px] leading-relaxed text-body">{d.positioning.belief}</p><div class="mb-2 flex gap-2">{d.positioning.personality.map((x: string) => <span class="rounded-full bg-chip px-3 py-1 font-mono text-xs text-chip-text">{x}</span>)}</div><p class="m-0 text-[13.5px] leading-relaxed text-muted">{d.positioning.personalityNote}</p></div>
+      <div class="rounded-xl border border-line bg-bg p-4"><div class={sub}>BENEFITS</div><div class="mb-1 text-sm font-semibold text-ink">Rational</div><ul class={ul}>{d.positioning.rational.map((x: string) => <li>{x}</li>)}</ul><div class="mb-1 mt-3 text-sm font-semibold text-ink">Emotional</div><ul class={ul}>{d.positioning.emotional.map((x: string) => <li>{x}</li>)}</ul></div>
+      <div class="rounded-xl border border-line bg-bg p-4"><div class={sub}>DISCRIMINATOR</div><ul class={ul}>{d.positioning.discriminator.map((x: string) => <li>{x}</li>)}</ul></div>
+      <div class="rounded-xl border border-line bg-bg p-4"><div class={sub}>REASONS TO BELIEVE</div><dl class="m-0 flex flex-col gap-3">{d.positioning.rtb.map((r: any) => <div><dt class="font-mono text-xs uppercase tracking-wide text-accent">{r.k}</dt><dd class="m-0 mt-0.5 text-[14px] leading-relaxed text-body">{r.v.join(' · ')}</dd></div>)}</dl></div>
+    </div>
+  </section>
+
+  <!-- Naming -->
+  <section class={card} aria-label={slides[9]}>
+    <div class={head}><span>Brand name proposals</span><span>{no(9)}</span></div>
+    <div class="grid gap-4 md:grid-cols-2">
+      {d.naming.map((n: any) => (
+        <article class="flex flex-col gap-2 rounded-xl border border-line bg-bg p-5">
+          <div class="font-mono text-xs text-accent">OPTION {n.option.toUpperCase()}</div>
+          <h4 class="m-0 font-serif text-[30px] font-normal leading-tight text-ink">{n.name}</h4>
+          <p class="m-0 text-[14.5px] leading-relaxed text-body">{n.meaning}</p>
+          <p class="m-0 mt-auto border-t border-line pt-3 font-mono text-xs leading-relaxed text-muted">{n.structure}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</div>

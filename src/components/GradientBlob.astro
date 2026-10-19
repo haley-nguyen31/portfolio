@@ -1,0 +1,9 @@
+---
+interface Props { variant?: 'hero' | 'collab'; class?: string }
+const { variant = 'hero', class: cls } = Astro.props;
+const v = {
+  hero: 'right-[-120px] top-[-80px] h-[560px] w-[560px] opacity-55 blur-[70px] bg-[radial-gradient(circle_at_30%_30%,rgba(43,43,255,.55),rgba(139,61,255,.45)_35%,rgba(224,64,138,.35)_60%,rgba(255,122,26,.25)_80%,rgba(255,122,26,0)_100%)]',
+  collab: 'left-[-100px] bottom-[-160px] h-[420px] w-[420px] blur-[60px] bg-[radial-gradient(circle,rgba(139,61,255,.35),rgba(255,122,26,.2)_55%,rgba(255,122,26,0)_75%)]',
+};
+---
+<div aria-hidden="true" class:list={['pointer-events-none absolute rounded-full', v[variant], cls]}></div>

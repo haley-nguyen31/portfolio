@@ -1,0 +1,35 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  date?: string;
+  org?: string;
+  tag?: string;
+  open?: boolean;
+  level?: 0 | 1 | 2;
+  logo?: string;
+}
+const { id, title, date, org, tag, open = false, level = 0, logo } = Astro.props;
+const pad = ['px-5 py-5 sm:px-7', 'px-4 py-4 sm:px-5', 'px-3 py-3 sm:px-4'][level];
+const head = ['text-xl sm:text-2xl', 'text-lg sm:text-xl', 'text-base sm:text-lg'][level];
+---
+<details
+  id={id}
+  open={open}
+  class:list={['acc group overflow-hidden rounded-2xl border border-line bg-surface', level > 0 && 'bg-bg']}
+>
+  <summary class:list={['flex cursor-pointer items-center gap-4 sm:gap-6', pad]}>
+    {date !== undefined && <span class="hidden w-36 shrink-0 font-mono text-xs uppercase tracking-wide text-muted sm:block">{date}</span>}
+    {logo && <span class="flex h-10 w-[72px] shrink-0 items-center justify-center sm:w-24"><img src={logo} alt="" width="96" height="40" loading="lazy" class="max-h-full max-w-full object-contain" /></span>}
+    <span class="min-w-0 flex-1">
+      {date && <span class="mb-1 block font-mono text-[11px] uppercase tracking-wide text-muted sm:hidden">{date}</span>}
+      <span class:list={['block font-semibold leading-snug text-ink', head]}>{title}</span>
+      {org && <span class="mt-0.5 block text-sm text-muted">{org}</span>}
+    </span>
+    {tag && <span class="hidden shrink-0 rounded-md bg-chip px-2.5 py-1 font-mono text-xs text-chip-text sm:inline-block">{tag}</span>}
+    <span class="acc-icon flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line font-mono text-xl leading-none text-ink" aria-hidden="true">+</span>
+  </summary>
+  <div class:list={['acc-body border-t border-line', pad, 'flex flex-col gap-5 text-[16px] leading-[1.7] text-body']}>
+    <slot />
+  </div>
+</details>

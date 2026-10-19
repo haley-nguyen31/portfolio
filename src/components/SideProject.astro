@@ -1,0 +1,77 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import MetaBar from './MetaBar.astro';
+import MetricCard from './MetricCard.astro';
+import Gallery from './Gallery.astro';
+import { sideProjectMedia } from '../lib/sideProjectMedia';
+
+interface Props { entry: CollectionEntry<'side-projects'> }
+const { entry } = Astro.props;
+const d = entry.data as any;
+const { Content } = await render(entry);
+const hasBody = !!entry.body?.trim();
+const metrics: { value: string; label: string }[] = d.metrics ?? [];
+const resp: any[] = d.responsibilities ?? [];
+const media = sideProjectMedia[entry.id] ?? [];
+const reels: string[] = d.links?.reels ?? [];
+const linkList: { label: string; href: string }[] = Array.isArray(d.links) ? d.links : [];
+const li = d.linkedinPost;
+---
+<MetaBar role={d.role} client={d.org} timeline={d.dateLabel} category={d.award} categoryLabel="Award" />
+
+{d.competitionNote && <p class="m-0 text-[15px] italic leading-relaxed text-muted">{d.competitionNote}</p>}
+{d.summary && !hasBody && <p class="m-0">{d.summary}</p>}
+
+{li && (
+  <div>
+    <div class="mono-label mb-3">FEATURED POST · LINKEDIN</div>
+    <div class="overflow-hidden rounded-xl border border-line bg-surface">
+      <iframe src={`https://www.linkedin.com/embed/feed/update/${li.id}`} title="LinkedIn post about the La Roche 'Pồ'-Say campaign" loading="lazy" referrerpolicy="no-referrer" class="block h-[620px] w-full border-0" allowfullscreen></iframe>
+    </div>
+    <p class="m-0 mt-2 font-mono text-xs"><a href={li.url} target="_blank" rel="noopener noreferrer" class="link-grad text-accent">Open the post on LinkedIn ↗</a></p>
+  </div>
+)}
+
+{metrics.length > 0 && (
+  <ul class="m-0 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-3">
+    {metrics.map((m) => <li><MetricCard value={m.value} label={m.label} /></li>)}
+  </ul>
+)}
+
+{hasBody && <div class="case-body"><Content /></div>}
+
+{resp.length > 0 && (
+  <div>
+    <div class="mono-label mb-3">KEY RESPONSIBILITIES</div>
+    <div class="grid gap-3 md:grid-cols-2">
+      {resp.map((r) => typeof r === 'string' ? (
+        <div class="rounded-xl border border-line bg-bg p-4 text-[14.5px] leading-relaxed text-body">{r}</div>
+      ) : (
+        <div class="rounded-xl border border-line bg-bg p-4">
+          <h4 class="m-0 mb-2 text-base font-semibold text-ink">{r.title}</h4>
+          <ul class="m-0 flex list-disc flex-col gap-1.5 pl-5 text-[14.5px] leading-relaxed text-body marker:text-accent">{r.points.map((p: string) => <li>{p}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
+{media.map((g, i) => (
+  <div>
+    <div class="mono-label mb-3">{g.title.toUpperCase()}</div>
+    <Gallery group={`g-${entry.id}-${i}`} items={g.items} class={g.cols} />
+  </div>
+))}
+
+{linkList.length > 0 && (
+  <p class="m-0 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs">
+    {linkList.map((l) => <a href={l.href} target="_blank" rel="noopener noreferrer" class="link-grad text-accent">{l.label} ↗</a>)}
+  </p>
+)}
+
+{(d.links?.facebook || reels.length > 0) && (
+  <p class="m-0 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs">
+    {d.links.facebook && <a href={d.links.facebook} target="_blank" rel="noopener noreferrer" class="link-grad text-accent">Hub de Tana on Facebook ↗</a>}
+    {reels.map((u, i) => <a href={u} target="_blank" rel="noopener noreferrer" class="link-grad text-accent">Reel {i + 1} ↗</a>)}
+  </p>
+)}

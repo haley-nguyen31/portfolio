@@ -1,0 +1,153 @@
+@import 'tailwindcss';
+@import '@fontsource/instrument-serif/400.css';
+@import '@fontsource/instrument-serif/400-italic.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+@theme {
+  --color-bg: #fafaf8;
+  --color-surface: #ffffff;
+  --color-ink: #111114;
+  --color-body: #3f3f48;
+  --color-muted: #6b6b76;
+  --color-line: #e7e7ea;
+  --color-cover: #f3f3f1;
+  --color-accent: #4b3bff;
+  --color-chip: #f1f0ff;
+  --color-chip-text: #2a1fb8;
+  --color-footer: #111114;
+  --color-footer-accent: #b9b2ff;
+  --color-dot: #d9d9de;
+  --color-ok: #22a05a;
+
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --container-site: 1200px;
+}
+
+:root {
+  --gradient: linear-gradient(90deg, #2b2bff, #8b3dff, #e0408a, #ff7a1a);
+  --header-h: 64px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 24px);
+}
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.dot-grid {
+  background-image: radial-gradient(var(--color-dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.wrap {
+  max-width: var(--container-site);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+.h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.h2 em, .h1 em { color: var(--color-accent); font-style: italic; }
+
+/* Gradient underline on hover (signature detail) */
+.link-grad {
+  background: var(--gradient) no-repeat 0 100% / 0 2px;
+  transition: background-size 0.3s ease;
+  text-decoration: none;
+}
+.link-grad:hover, .link-grad[aria-current='page'] { background-size: 100% 2px; }
+
+@keyframes hnBlink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@keyframes hnPulse {
+  0% { box-shadow: 0 0 0 0 rgba(34, 160, 90, 0.45); }
+  70% { box-shadow: 0 0 0 8px rgba(34, 160, 90, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 160, 90, 0); }
+}
+.hn-cursor { animation: hnBlink 1.1s steps(1) infinite; }
+.hn-pulse { animation: hnPulse 2s infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .hn-cursor, .hn-pulse { animation: none; }
+}
+
+[hidden] { display: none !important; }
+
+/* Expandable items: native <details>, animated where ::details-content is supported */
+details.acc { interpolate-size: allow-keywords; }
+details.acc::details-content {
+  block-size: 0;
+  opacity: 0;
+  overflow: clip;
+  transition: block-size 0.35s ease, opacity 0.3s ease, content-visibility 0.35s allow-discrete;
+}
+details.acc[open]::details-content { block-size: auto; opacity: 1; }
+details.acc > summary { list-style: none; }
+details.acc > summary::-webkit-details-marker { display: none; }
+details.acc[open] > summary .acc-icon { transform: rotate(45deg); }
+.acc-icon { transition: transform 0.25s ease; }
+
+/* Scroll reveal (src/scripts/motion.ts adds .in); visible by default without JS */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0ms);
+}
+.js [data-reveal].in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] { opacity: 1; transform: none; }
+}
+
+/* Rendered markdown inside expandable case studies */
+.case-body h2 {
+  margin: 1.6em 0 0.5em;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.case-body h2:first-child { margin-top: 0; }
+.case-body p { margin: 0 0 1em; }
+.case-body p:last-child { margin-bottom: 0; }
+.case-body ul { margin: 0 0 1em; padding-left: 1.25em; }
+.case-body a { color: var(--color-accent); }
+
+.no-acc-anim details.acc::details-content { transition: none !important; }
+.no-acc-anim { scroll-behavior: auto !important; }

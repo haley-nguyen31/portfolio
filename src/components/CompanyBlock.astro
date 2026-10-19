@@ -1,0 +1,96 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Accordion from './Accordion.astro';
+import CaseStudy from './CaseStudy.astro';
+import MetricCard from './MetricCard.astro';
+import Img from './Img.astro';
+import Gallery from './Gallery.astro';
+
+interface Props { entry: CollectionEntry<'work'>; children: CollectionEntry<'work'>[]; childLabel: string }
+const { entry, children, childLabel } = Astro.props;
+const d = entry.data as any;
+const { Content } = await render(entry);
+const hasBody = !!entry.body?.trim();
+const dp = d.digitalPerformance;
+const dateOf = (c: CollectionEntry<'work'>) => (c.data as any).dateLabel ?? (c.data as any).timeline;
+const anyDate = children.some((c) => dateOf(c));
+---
+<Accordion id={entry.id} date={d.dateLabel ?? ''} title={d.title} org={[d.org, d.location].filter(Boolean).join(' · ')} tag={d.employmentType} logo={d.logoSrc}>
+  {d.summary && <p class="m-0 font-serif text-[22px] leading-snug text-ink">{d.summary}</p>}
+  {d.links && <p class="m-0 flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs">{d.links.map((l: any) => <a href={l.href} target="_blank" rel="noopener noreferrer" class="link-grad text-accent">{l.label} ↗</a>)}</p>}
+  {hasBody && <div class="case-body"><Content /></div>}
+
+  {d.howIWork && (
+    <div>
+      <div class="mono-label mb-3">HOW I WORK</div>
+      <div class="grid gap-3 md:grid-cols-2">
+        {d.howIWork.map((h: any, i: number) => (
+          <div class="rounded-xl border border-line bg-bg p-5">
+            <div class="mb-1.5 font-mono text-xs text-accent">0{i + 1}</div>
+            <h4 class="m-0 mb-2 text-lg font-semibold text-ink">{h.heading}</h4>
+            <p class="m-0 text-[15px] leading-relaxed text-body">{h.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {dp && (
+    <div class="flex flex-col gap-5">
+      <div class="mono-label">DIGITAL PERFORMANCE</div>
+      <p class="m-0">{dp.intro}</p>
+      {d.clientLogos && (
+        <ul class="m-0 flex list-none flex-wrap gap-3 p-0" aria-label="Clients">
+          {d.clientLogos.map((c: any) => (
+            <li class="h-[84px] w-[84px] overflow-hidden rounded-xl border border-line bg-surface">
+              <Img name={c.image} alt={c.name} widths={[84, 168]} sizes="84px" class="h-full w-full object-contain" />
+            </li>
+          ))}
+        </ul>
+      )}
+      <ul class="m-0 flex list-disc flex-col gap-2 pl-5 marker:text-accent">{dp.points.map((p: string) => <li>{p}</li>)}</ul>
+      {dp.metrics && <ul class="m-0 grid max-w-xs list-none p-0">{dp.metrics.map((m: any) => <li><MetricCard value={m.value} label={m.label} /></li>)}</ul>}
+    </div>
+  )}
+
+  {d.pillars && (
+    <div class="grid gap-3 md:grid-cols-3">
+      {d.pillars.map((p: any) => (
+        <div class="rounded-xl border border-line bg-bg p-5">
+          <div class="mb-1.5 font-mono text-xs text-accent">{p.number}</div>
+          <h4 class="m-0 mb-2 text-base font-semibold text-ink">{p.title}</h4>
+          <p class="m-0 text-[14.5px] leading-relaxed text-body">{p.body}</p>
+        </div>
+      ))}
+    </div>
+  )}
+
+  {d.keySkills && (
+    <div>
+      <div class="mono-label mb-3">KEY SKILLS DEVELOPED</div>
+      <ul class="m-0 grid list-none gap-3 p-0 md:grid-cols-3">
+        {d.keySkills.map((k: any) => (
+          <li class="rounded-xl border border-line bg-surface p-4"><div class="mb-1 text-[15px] font-semibold text-ink">{k.title}</div><p class="m-0 text-[14.5px] leading-relaxed text-body">{k.body}</p></li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  {d.evidence && (
+    <div>
+      <div class="mono-label mb-3">EVIDENCE</div>
+      <Gallery group={`g-${entry.id}`} class="grid-cols-2 md:grid-cols-3" items={d.evidence.map((e: any) => ({ name: e.image, alt: e.alt, caption: e.skill }))} />
+    </div>
+  )}
+
+  {children.length > 0 && (
+    <div class="flex flex-col gap-3">
+      <div class="mono-label">{childLabel}</div>
+      {children.map((c) => (
+        <Accordion id={c.id} level={1} date={anyDate ? (dateOf(c) ?? '') : undefined} title={c.data.title ?? c.id} org={(c.data as any).client ?? c.data.org} tag={(c.data as any).kind} logo={(c.data as any).logoSrc}>
+          <CaseStudy entry={c} />
+        </Accordion>
+      ))}
+    </div>
+  )}
+</Accordion>

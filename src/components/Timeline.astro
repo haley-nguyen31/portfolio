@@ -1,0 +1,36 @@
+---
+import { highlightNumbers } from '../lib/text';
+import Gallery from './Gallery.astro';
+
+interface Item {
+  date: string;
+  title: string;
+  subtitle?: string;
+  description?: string;
+  note?: string;
+  bullets?: string[];
+  footnote?: string;
+  images?: { name: string; alt: string; caption?: string }[];
+}
+interface Props { items: Item[]; group?: string }
+const { items, group = 'timeline' } = Astro.props;
+---
+<ol class="relative m-0 list-none p-0 before:absolute before:bottom-2 before:left-[3px] before:top-2 before:w-px before:bg-line">
+  {items.map((it, i) => (
+    <li class="relative pb-10 pl-8 last:pb-0">
+      <span class="absolute left-0 top-2 h-[7px] w-[7px] rounded-full bg-accent" aria-hidden="true"></span>
+      <div class="font-mono text-xs uppercase tracking-wide text-muted">{it.date}</div>
+      <h3 class="m-0 mt-1 text-lg font-semibold text-ink">{it.title}</h3>
+      {it.subtitle && <div class="text-sm text-muted">{it.subtitle}</div>}
+      {it.note && <p class="m-0 mt-2 text-sm italic text-muted">{it.note}</p>}
+      {it.description && <p class="m-0 mt-2 text-[15.5px] leading-[1.7] text-body" set:html={highlightNumbers(it.description)} />}
+      {it.bullets && it.bullets.length > 0 && (
+        <ul class="m-0 mt-3 flex list-disc flex-col gap-2 pl-5 text-[15.5px] leading-[1.7] text-body marker:text-accent">
+          {it.bullets.map((b) => <li set:html={highlightNumbers(b)} />)}
+        </ul>
+      )}
+      {it.footnote && <p class="m-0 mt-3 text-sm italic text-muted">{it.footnote}</p>}
+      {it.images && it.images.length > 0 && <div class="mt-4 max-w-md"><Gallery group={`${group}-${i}`} items={it.images} class="grid-cols-2" /></div>}
+    </li>
+  ))}
+</ol>

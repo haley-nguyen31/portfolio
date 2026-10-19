@@ -1,0 +1,121 @@
+---
+import Base from '../layouts/Base.astro';
+import home from '../data/home.json';
+import SectionLabel from '../components/SectionLabel.astro';
+import StatusPill from '../components/StatusPill.astro';
+import TerminalCard from '../components/TerminalCard.astro';
+import MetricStrip from '../components/MetricStrip.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import FilterPills from '../components/FilterPills.astro';
+import GradientBlob from '../components/GradientBlob.astro';
+import Button from '../components/Button.astro';
+import Img from '../components/Img.astro';
+
+const { hero, now, work, sideProjects, awards, collaborate } = home;
+const sideHeading = sideProjects.heading ?? sideProjects.headingOptions[0]; // TODO: Haley picks the final heading
+---
+<Base title="Haley Nguyen · Brave-Haley" description="Haley Nguyen (Phuong Minh Nguyen): growth marketer, strategic planner and community builder. Open to opportunities in education and tech for good.">
+  <section id="top" class="dot-grid relative overflow-hidden border-b border-line">
+    <GradientBlob />
+    <div class="wrap relative flex flex-wrap items-start gap-12 pb-20 pt-10 md:gap-16 md:pt-16">
+      <div class="flex min-w-0 flex-[999_1_560px] flex-col gap-7">
+        <StatusPill>{hero.status}</StatusPill>
+        <h1 class="h1 m-0 font-serif text-[clamp(56px,8vw,104px)] font-normal leading-[0.98] tracking-[-0.02em]">{hero.h1}</h1>
+        <div class="flex max-w-[600px] flex-col gap-5 text-[17px] leading-[1.6] text-body md:text-[19px]">
+          <p class="m-0 font-semibold text-ink">{hero.tagline}</p>
+          <p class="m-0">{hero.intro}</p>
+        </div>
+      </div>
+      <div class="relative min-w-0 flex-[1_1_360px]">
+        <figure class="relative m-0 ml-auto w-full max-w-[400px] overflow-hidden rounded-2xl border border-line bg-surface p-2 shadow-[0_24px_60px_-30px_rgba(17,17,20,0.25)]">
+          <Img name={hero.photo.name} alt={hero.photo.alt} loading="eager" widths={[360, 480, 720, 1100]} sizes="(min-width:1024px) 400px, 90vw" class="aspect-[4/5] w-full rounded-xl object-cover" />
+          <figcaption class="absolute left-5 top-5 max-w-[75%] rounded-lg border border-line bg-surface/90 px-2.5 py-1.5 font-mono text-[11px] leading-snug text-ink backdrop-blur-sm">{hero.photo.caption}</figcaption>
+        </figure>
+        <div class="relative z-10 mt-5 w-full max-w-[400px] md:-mt-16 md:-ml-6 md:w-[min(100%,360px)] lg:-ml-14">
+          <TerminalCard lines={hero.terminal} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <MetricStrip metrics={home.metrics} />
+
+  <section id="now" class="wrap pb-10 pt-14 md:pt-16">
+    <SectionLabel>{now.label}</SectionLabel>
+    <div data-reveal class="flex flex-wrap items-start gap-12">
+      <div class="flex flex-[1_1_320px] flex-col gap-8">
+        <h2 class="h2 m-0" set:html={now.heading} />
+        <figure class="m-0 w-full max-w-[320px] overflow-hidden rounded-2xl border border-line bg-surface p-2">
+          <Img name={now.photo.name} alt={now.photo.alt} widths={[320, 640]} sizes="320px" class="aspect-[4/5] w-full rounded-xl object-cover" />
+        </figure>
+      </div>
+      <div class="grid flex-[2_1_520px] grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4">
+        {now.cards.map((c) => (
+          <article class="flex flex-col gap-3 rounded-[14px] border border-line bg-surface p-[26px]">
+            <div class="font-mono text-xs text-muted">{c.date}</div>
+            <h3 class="m-0 text-[19px] font-semibold">{c.title}</h3>
+            <p class="m-0 text-[15px] leading-relaxed text-body">{c.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="work" class="wrap pb-14 pt-10 md:pb-16">
+    <SectionLabel>{work.label}</SectionLabel>
+    <div data-reveal class="mb-10 flex flex-wrap items-end justify-between gap-6">
+      <h2 class="h2 m-0">{work.heading}</h2>
+      <FilterPills filters={work.filters} target="#project-grid" />
+    </div>
+    <div id="project-grid" data-reveal-group class="grid grid-cols-[repeat(auto-fill,minmax(min(100%,320px),1fr))] gap-5">
+      {work.cards.map((c) => <ProjectCard num={c.num} category={c.category} client={c.client} title={c.title} summary={c.summary} chip={c.chip} link={c.link} image={c.image} imagePos={(c as any).imagePos} />)}
+    </div>
+  </section>
+
+  <section id="side-projects" class="border-y border-line bg-surface">
+    <div class="wrap py-14 md:py-16">
+      <SectionLabel>{sideProjects.label}</SectionLabel>
+      <h2 class="h2 mb-12 mt-0 max-w-[760px]" set:html={sideHeading} />
+      <div data-reveal-group class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] border-t border-line">
+        {sideProjects.items.map((s) => (
+          <a href={`/side-projects#${s.slug}`} class="group flex flex-col gap-3 pb-2 pr-7 pt-8 no-underline">
+            <span class="relative mb-2 block aspect-[16/10] overflow-hidden rounded-xl border border-line bg-cover">
+              <Img name={s.image} alt="" sizes="(min-width:1024px) 360px, 100vw" widths={[360, 540, 720]} class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]" style={`object-position:${s.imagePos}`} />
+            </span>
+            <span class="font-mono text-[13px] text-accent">{s.num} / {s.title}</span>
+            <span class="text-base leading-[1.65] text-body">{s.sub}</span>
+            <span class="link-grad self-start font-mono text-xs text-muted group-hover:text-accent" aria-hidden="true">View →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="recognition" class="wrap py-14 md:py-16">
+    <SectionLabel>{awards.label}</SectionLabel>
+    <div class="flex flex-wrap gap-12">
+      <h2 class="h2 m-0 flex-[1_1_300px]" set:html={awards.heading} />
+      <ul data-reveal-group class="m-0 flex flex-[2_1_560px] list-none flex-col border-t border-line p-0">
+        {awards.items.map((a) => (
+          <li class="flex flex-wrap items-baseline gap-x-6 gap-y-2 border-b border-line py-[22px]">
+            <span class="w-14 font-mono text-[13px] text-muted">{a.year}</span>
+            <span class="flex-[1_1_300px] text-lg font-medium">{a.title}</span>
+            <span class="text-sm text-muted">{a.org}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap pb-14 md:pb-16">
+    <div data-reveal class="relative flex flex-wrap items-center justify-between gap-8 overflow-hidden rounded-3xl border border-line bg-surface px-6 py-12 sm:px-12 sm:py-16">
+      <GradientBlob variant="collab" />
+      <div class="relative flex flex-[1_1_520px] flex-col gap-4">
+        <div class="mono-label">{collaborate.label}</div>
+        <h2 class="m-0 font-serif text-[clamp(30px,4vw,40px)] font-normal leading-[1.1]">{collaborate.heading}</h2>
+        <p class="m-0 max-w-[620px] text-[17px] leading-[1.6] text-body">{collaborate.body}</p>
+      </div>
+      <Button href="#contact" class="relative">{collaborate.cta}</Button>
+    </div>
+  </section>
+</Base>
