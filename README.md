@@ -6,7 +6,7 @@ Pages: `/` Home, `/about`, `/resume`, `/work`, `/side-projects`, plus a custom 4
 
 ## Run it locally
 
-Needs Node 20 or newer.
+Needs Node 22.22 or newer (Astro 7).
 
 ```bash
 npm install
@@ -81,7 +81,7 @@ Every expandable item has an id, so `/work#my-project` opens and scrolls to it, 
 
 ## Deploy to Netlify
 
-`netlify.toml` already has the build command (`npm run build`), the publish folder (`dist`), Node 20 and cache headers, so Netlify needs no extra settings.
+`netlify.toml` already has the build command (`npm run build`), the publish folder (`dist`), Node 22 and cache headers, so Netlify needs no extra settings.
 
 ### Option 1: GitHub + Netlify (recommended, redeploys on every push)
 
